@@ -1,6 +1,6 @@
 from sqlalchemy import Column,String,DateTime,Text,ForeignKey
 from sqlalchemy.dialects.postgresql import UUID,JSONB
-# from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship
 from db.database import Base
 from sqlalchemy.sql import func
 import uuid
@@ -19,3 +19,4 @@ class AuditLog(Base):
     new_values = Column(JSONB,nullable=True)
     description = Column(Text,nullable=True)
     created_at = Column(DateTime(timezone=True),server_default=func.now())
+    user = relationship("User", back_populates="audit_logs")
