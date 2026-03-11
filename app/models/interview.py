@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Integer, ForeignKey, Text, TIMESTAMP, Boolean, CheckConstraint
+from sqlalchemy import Column, String, Integer, ForeignKey, Text, DateTime, Boolean, CheckConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -12,7 +12,7 @@ class InterviewRound(Base):
     candidate_id = Column(UUID(as_uuid=True), ForeignKey("candidates.id", ondelete="CASCADE"), nullable=False)
     round_number = Column(Integer, nullable=False)
     round_type = Column(String(50), nullable=False)
-    scheduled_date = Column(TIMESTAMP, nullable=True)
+    scheduled_date = Column(DateTime, nullable=True)
     duration_minutes = Column(Integer, default=60)
     interviewer_name = Column(String(100), nullable=True)
     interviewer_email = Column(String(255), nullable=True)
@@ -22,8 +22,8 @@ class InterviewRound(Base):
     rating = Column(Integer)
     recommendation = Column(String(20), nullable=True)
     created_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
-    created_at = Column(TIMESTAMP, server_default=func.now())
-    updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     __table_args__ = (CheckConstraint("rating >= 1 AND rating <= 5", name="check_rating_range"),)
     reminder_24_hrs = Column(Boolean, default=False)
     reminder_1_hr = Column(Boolean, default=False)
