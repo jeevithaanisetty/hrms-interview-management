@@ -16,7 +16,7 @@ class NotificationService:
             server.send_message(msg)
             server.quit()
         except Exception as e :
-            print("Email Sending Failed")
+            print("Email Sending Failed:",e)
         
     @staticmethod
     def send_schedule(candidate,interview):
